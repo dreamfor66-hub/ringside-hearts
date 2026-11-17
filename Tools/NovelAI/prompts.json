@@ -1,0 +1,114 @@
+{
+  "model": "nai-diffusion-4-5-full",
+  "furry_mode": false,
+  "_template_note": "Matches the user's own NovelAI generations (read from their image metadata, 2026-11-17): weighted live a hero, down-weighted world flipper, quality tags inside the prompt, empty negative, 25 steps, scale 6.3.",
+  "common_prefix": "{{live a hero}}, {white bg}, single character, male, wrestler, furry",
+  "common_suffix": "\n\n,[[[world flipper]]], housamo, {{live a hero}}, very aesthetic, masterpiece, no text",
+  "quality_tags": "",
+  "negative": "",
+  "variant_negative": {
+    "awakened_stance": "jumping, midair, floating, one leg raised",
+    "awakened_dynamic": "jumping, midair, floating",
+    "awakened_dynamic_full": "jumping, midair, floating, cropped, out of frame, feet out of frame",
+    "aw_rush": "cropped, out of frame, feet out of frame",
+    "aw_kick": "cropped, out of frame, feet out of frame",
+    "aw_twin": "cropped, out of frame, feet out of frame",
+    "aw_uppercut": "cropped, out of frame, feet out of frame",
+    "aw_back": "cropped, out of frame, feet out of frame",
+    "aw_lariat": "cropped, out of frame, feet out of frame",
+    "aw_rush_r7": "cropped, out of frame, purple fur, lavender fur, curled up"
+  },
+  "params": {
+    "width": 832,
+    "height": 1216,
+    "steps": 25,
+    "scale": 6.3,
+    "sampler": "k_euler_ancestral",
+    "noise_schedule": "karras",
+    "cfg_rescale": 0,
+    "ucPreset": 0,
+    "qualityToggle": false
+  },
+  "_characters_note": "core = colors, species, signature items (always sent). details = body and costume traits (dropped when a character reference is used, as the user does). standing ends with 'no effect'; awakened is a readable strike or attack-ready pose plus one effect word.",
+  "characters": {
+    "longwei": {
+      "core": "green, gold, eastern dragon, white mane, mask",
+      "details": "muscular, mature male, red sash, chinese pattern, beads necklace, taped wrists",
+      "standing": "stand, open palm, no effect",
+      "awakened": "palm strike, attack pose, green wind, dragon",
+      "awakened_stance": "horse stance, wide stance, legs spread apart, both feet on ground, low stance, martial arts ready pose, open palm forward, attack pose, green wind, energy, dragon aura",
+      "awakened_dynamic": "dynamic angle, low angle camera, dutch angle, wide stance, both feet on ground, twisting body, palm strike toward viewer, foreshortening, attack pose, green wind, energy, dragon aura",
+      "awakened_dynamic_full": "full body, whole body in frame, dynamic angle, low angle camera, dutch angle, wide stance, both feet on ground, twisting body, palm strike toward viewer, foreshortening, attack pose, green wind, energy, dragon aura",
+      "aw_rush": "full body, whole body in frame, dragon rush, charging forward, low tackle, shoulder first, low angle camera, dragon spirit trailing behind, green wind, attack pose",
+      "aw_kick": "full body, whole body in frame, spinning hook kick, one leg extended high, martial arts kick, side view, green whirlwind, dragon aura, attack pose",
+      "aw_twin": "full body, whole body in frame, double palm strike, both palms forward, symmetrical, front view, horse stance, twin dragon heads of green energy, attack pose",
+      "aw_uppercut": "full body, whole body in frame, rising uppercut, fist raised high, other hand low, low angle camera, green dragon spiraling upward, attack pose",
+      "aw_back": "full body, whole body in frame, from behind, back view, looking back over shoulder, palm strike forward, tail, green dragon aura in front, attack pose",
+      "aw_lariat": "full body, whole body in frame, lariat, arm extended sideways, running, side view, green wind trail, dragon spirit, attack pose",
+      "aw_rush_r7": "full body, whole body in frame, dashing toward viewer, running forward, one boot forward, foreshortening, both claws spread, tail arcing overhead, green wind swirl, attack pose, white beard, white fur, white mane, muscular, abs"
+    },
+    "reynard": {
+      "core": "white, gold, red fox, mask",
+      "details": "slim, noble, cape, gloves",
+      "standing": "stand, hand on hip, smug, no effect",
+      "awakened": "chop, attack pose, golden sparkle"
+    },
+    "rocket_rabbit": {
+      "core": "red, white, rabbit, mask",
+      "details": "slim, young, hand wraps",
+      "standing": "stand, fighting pose, grin, no effect",
+      "awakened": "flying knee kick, attack pose, fire"
+    },
+    "iron_fin": {
+      "core": "navy, gray, shark, mask, machine arm",
+      "details": "muscular, big, sailor tattoo",
+      "standing": "stand, raised fist, grin, no effect",
+      "awakened": "tackle, charge, attack pose, electricity, water"
+    },
+    "bernard": {
+      "core": "brown, white, saint bernard, monocle",
+      "details": "old, chubby, muscular, butler, bow tie, vest, white gloves",
+      "standing": "stand, bow, gentle smile, no effect",
+      "awakened": "grappler, grab, attack pose, gold light"
+    },
+    "ghost_crow": {
+      "core": "black, purple, crow, mask",
+      "details": "slim, hood, jacket, chains",
+      "standing": "stand, crouch, sly smile, no effect",
+      "awakened": "diving elbow drop, attack pose, purple feathers"
+    },
+    "mac": {
+      "core": "red, bulldog",
+      "details": "middle-aged, stocky, chubby, muscular, track jacket, whistle, scar",
+      "standing": "stand, crossed arms, stern, no effect",
+      "awakened": "lariat, charge, attack pose, fire"
+    },
+    "junior": {
+      "core": "light blue, white, polar bear, mask",
+      "details": "young, big, chubby, muscular, cooling bracelets",
+      "standing": "stand, shy smile, no effect",
+      "awakened": "diving body press, attack pose, ice"
+    },
+    "hippo": {
+      "core": "green, pink, hippo, sumo",
+      "details": "fat, belly, big, mawashi, festival tattoo, flower garland",
+      "standing": "stand, sumo stance, smile, no effect",
+      "awakened": "palm thrust, stomp, attack pose, green wind, dust"
+    },
+    "deathroll": {
+      "core": "purple, black, crocodile, mohawk",
+      "details": "muscular, punk, leather, spikes, chains",
+      "standing": "stand, rock pose, shout, no effect",
+      "awakened": "tackle, charge, open jaws, attack pose, purple aura"
+    },
+    "red_dragon": {
+      "core": "red, blue, red dragon, wings, mask",
+      "details": "muscular, big, blue wearing, gold trim",
+      "standing": "(given: user's ideation image ArtRaw/red_dragon/ideation_17.webp)",
+      "awakened": "diving body press, flying, wings spread, falling from above, attack pose, fire",
+      "awakened_tackle": "tackle, charge, wings spread, attack pose, flaming wings, fire",
+      "awakened_lariat": "side view, running, flaming lariat, arm extended, wings spread, attack pose, fire",
+      "awakened_toprope": "standing on top rope, crouching on turnbuckle, wings spread wide, about to dive, from below, attack pose, fire"
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "longwei": {
+    "standing": {
+      "file": "ArtRaw/longwei/standing/20261117-021228_3746380730.png",
+      "seed": 3746380730,
+      "picked": "2026-11-17",
+      "note": "2nd run (wrestler emphasis, no effects), candidate #10"
+    },
+    "awakened": {
+      "file": "ArtRaw/longwei/awakened_final/longwei_awakened_blend_v6.png",
+      "picked": "2026-11-17",
+      "note": "Composite v6: base S0.6-1 (head, hands, trunks) + 05 (top/side effects, apron sides). KNOWN ISSUE: faint ghosting where the two images were blended (left thigh under the apron, right side whisker/effects). User accepted it for now; fix before release.",
+      "sources": {
+        "05": "ArtRaw/longwei/aw_explore_05_sweep/20261117-040648_3367826902.png",
+        "S0.6-1": "ArtRaw/longwei/aw_sweep_i2i0.6/20261117-041235_2992148550.png"
+      },
+      "fix_before_release": true
+    }
+  },
+  "red_dragon": {
+    "standing": {
+      "file": "ArtRaw/red_dragon/ideation_17.webp",
+      "seed": 1497934748,
+      "picked": "2026-11-17",
+      "note": "user's own ideation image, used as the standing"
+    },
+    "awakened": {
+      "file": "ArtRaw/red_dragon/awakened_lariat/20261117-025328_1426091413.png",
+      "seed": 1426091413,
+      "picked": "2026-11-17",
+      "note": "C5 (side-view lariat run, reference strength 0.7)"
+    },
+    "awakened_alternate": {
+      "file": "ArtRaw/red_dragon/awakened_toprope/20261117-025432_553463851.png",
+      "seed": 553463851,
+      "note": "D6, low angle; user likes that it continues the tackle-ready crouch of the standing"
+    }
+  }
+}

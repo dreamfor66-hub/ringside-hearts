@@ -95,3 +95,5 @@ omnisharp.json
 
 **/*.dSYM/
 **/Contents/Resources/DWARF/*
+# Raw image generation candidates (kept out of the repo)
+/[Aa]rt[Rr]aw/
