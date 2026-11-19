@@ -97,3 +97,9 @@ omnisharp.json
 **/Contents/Resources/DWARF/*
 # Raw image generation candidates (kept out of the repo)
 /[Aa]rt[Rr]aw/
+
+# dotnet test harness for battle core
+/Tools/CoreTests/bin/
+/Tools/CoreTests/obj/
+!/Tools/CoreTests/CoreTests.csproj
+/Screenshots/

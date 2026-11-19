@@ -1,0 +1,8 @@
+﻿id,name,slot1,second1,slot2,second2,slot3,second3,control,stamina_mul,power_mul,body_mul,ai_aim_error,ai_candidates,ai_tap_rate,ai_timing
+# control: 사람 / AI. 내 팀은 편성 화면에서 바꿈 (player_default가 시작값)
+# ai_tap_rate: AI의 힘겨루기 연타 (초당), ai_timing: 타이밍 정확도 0~1
+player_default,RRP,leo,fang,tiger,zefiro,luka,iceberg,사람,1,1,1,8,12,7,0.6
+outlaws_a,아웃로즈,bolt,noir,laugh,deathroll,jack,tanu,AI,1,1,1,5,3,5,0.5
+outlaws_b,아웃로즈 별동대,toro,laugh,noir,jack,deathroll,bolt,AI,1.15,1,1.15,5,3,5,0.5
+boss_team,마운틴 버스터,buster,,,,,,AI,3.1,1.15,3.1,4,3,8,0.7
+tornado_outlaws,아웃로즈 2인조,bolt,jack,noir,deathroll,,,AI,1.55,1.15,1.55,5,3,5,0.5

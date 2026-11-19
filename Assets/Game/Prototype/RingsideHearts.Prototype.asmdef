@@ -1,0 +1,19 @@
+{
+    "name": "RingsideHearts.Prototype",
+    "rootNamespace": "RingsideHearts.Prototype",
+    "references": [
+        "RingsideHearts.Battle.Core",
+        "RingsideHearts.Battle.View",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
