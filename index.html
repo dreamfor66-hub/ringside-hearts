@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><style>html,body{margin:0}[hidden]{display:none!important}</style></head><body>
+<title>링사이드 하츠</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* One-screen game: the canvas fills the phone; a portrait box on wide screens. Single dark look by choice. */
+  :root {
+    --bg: #14141a;
+    --ink: #f2c230;
+    --dim: #8a8c96;
+    --bar: #e24b4a;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  }
+  #stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
+  }
+  #frame {
+    position: relative;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: 9 / 16;
+  }
+  #unity-canvas { width: 100%; height: 100%; display: block; background: var(--bg); outline: none; }
+  #loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 0 max(16px, env(safe-area-inset-left, 0px));
+    text-align: center;
+  }
+  #loading[hidden], #error[hidden] { display: none; }
+  #loading h1 { margin: 0; font-size: clamp(28px, 8vw, 44px); letter-spacing: 0.04em; text-wrap: balance; }
+  #loading p { margin: 0; color: var(--dim); font-size: 14px; }
+  .track { width: min(70%, 320px); height: 8px; background: rgba(255, 255, 255, 0.12); border-radius: 4px; overflow: hidden; }
+  .fill { width: 0; height: 100%; background: var(--bar); transition: width 0.2s; }
+  #error { color: var(--bar); font-size: 14px; max-width: 34ch; }
+</style>
+
+<div id="stage">
+  <div id="frame">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="loading">
+      <h1>RINGSIDE HEARTS</h1>
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <p id="status">경기장 준비 중… 0%</p>
+      <p id="error" hidden></p>
+    </div>
+  </div>
+</div>
+
+<script src="Build/WebBuild.loader.js"></script>
+<script>
+  (function () {
+    var canvas = document.getElementById("unity-canvas");
+    var fill = document.getElementById("fill");
+    var status = document.getElementById("status");
+    var errorBox = document.getElementById("error");
+    var loading = document.getElementById("loading");
+    // stop the page from scrolling or zooming while the thumbs mash
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
+    var config = {
+      dataUrl: "Build/WebBuild.data.unityweb",
+      frameworkUrl: "Build/WebBuild.framework.js.unityweb",
+      codeUrl: "Build/WebBuild.wasm.unityweb",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Ringside",
+      productName: "RingsideHearts",
+      productVersion: "0.6",
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      matchWebGLToCanvasSize: true,
+      autoSyncPersistentDataPath: true,
+    };
+    createUnityInstance(canvas, config, function (p) {
+      var pct = Math.round(p * 100);
+      fill.style.width = pct + "%";
+      status.textContent = "경기장 준비 중… " + pct + "%";
+    }).then(function () {
+      loading.hidden = true;
+    }).catch(function (message) {
+      errorBox.hidden = false;
+      errorBox.textContent = "불러오지 못했어요: " + message;
+    });
+  })();
+</script>
+
+</body></html>
