@@ -39,7 +39,7 @@
     max-width: 100%;
     aspect-ratio: 9 / 16;
   }
-  #unity-canvas { width: 100%; height: 100%; display: block; background: var(--bg); outline: none; }
+  #unity-canvas { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: none; width: 100%; height: 100%; display: block; background: var(--bg); outline: none; }
   #loading {
     position: absolute;
     inset: 0;
@@ -82,6 +82,9 @@
     // stop the page from scrolling or zooming while the thumbs mash
     document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
     document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
+    // holding a character opens its detail: the browser's own long-press menu and selection must not cut the touch
+    document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+    document.addEventListener("selectstart", function (e) { e.preventDefault(); });
     var config = {
       dataUrl: "Build/WebBuild.data.unityweb",
       frameworkUrl: "Build/WebBuild.framework.js.unityweb",
