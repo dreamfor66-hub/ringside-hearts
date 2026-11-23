@@ -1,133 +1,113 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity Web Player | RingsideHearts</title>
-    <link rel="shortcut icon" href="TemplateData/favicon.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-  </head>
-  <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=450 height=800 tabindex="-1"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
-      <div id="unity-warning"> </div>
-      <div id="unity-footer">
-        <div id="unity-logo-title-footer"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">RingsideHearts</div>
-      </div>
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover"><meta name="apple-mobile-web-app-capable" content="yes"><style>html,body{margin:0}[hidden]{display:none!important}</style></head><body>
+<title>링사이드 하츠</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+  /* One-screen game: the canvas fills the phone; a portrait box on wide screens. Single dark look by choice. */
+  :root {
+    --bg: #14141a;
+    --ink: #f2c230;
+    --dim: #8a8c96;
+    --bar: #e24b4a;
+    color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    overflow: hidden;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    font-family: system-ui, -apple-system, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
+  }
+  #stage {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
+  }
+  #frame {
+    position: relative;
+    height: 100%;
+    max-width: 100%;
+    aspect-ratio: 9 / 16;
+  }
+  #unity-canvas { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; touch-action: none; width: 100%; height: 100%; display: block; background: var(--bg); outline: none; }
+  #loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 0 max(16px, env(safe-area-inset-left, 0px));
+    text-align: center;
+  }
+  #loading[hidden], #error[hidden] { display: none; }
+  #loading h1 { margin: 0; font-size: clamp(28px, 8vw, 44px); letter-spacing: 0.04em; text-wrap: balance; }
+  #loading p { margin: 0; color: var(--dim); font-size: 14px; }
+  .track { width: min(70%, 320px); height: 8px; background: rgba(255, 255, 255, 0.12); border-radius: 4px; overflow: hidden; }
+  .fill { width: 0; height: 100%; background: var(--bar); transition: width 0.2s; }
+  #error { color: var(--bar); font-size: 14px; max-width: 34ch; }
+</style>
+
+<div id="stage">
+  <div id="frame">
+    <canvas id="unity-canvas" tabindex="-1"></canvas>
+    <div id="loading">
+      <h1>RINGSIDE HEARTS</h1>
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <p id="status">경기장 준비 중… 0%</p>
+      <p id="error" hidden></p>
     </div>
-    <script>
-      var canvas = document.querySelector("#unity-canvas");
+  </div>
+</div>
 
-      // Shows a temporary message banner/ribbon for a few seconds, or
-      // a permanent error message on top of the canvas if type=='error'.
-      // If type=='warning', a yellow highlight color is used.
-      // Modify or remove this function to customize the visually presented
-      // way that non-critical warnings and error messages are presented to the
-      // user.
-      function unityShowBanner(msg, type) {
-        var warningBanner = document.querySelector("#unity-warning");
-        function updateBannerVisibility() {
-          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
-        }
-        var div = document.createElement('div');
-        div.innerHTML = msg;
-        warningBanner.appendChild(div);
-        if (type == 'error') div.style = 'background: red; padding: 10px;';
-        else {
-          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
-          setTimeout(function() {
-            warningBanner.removeChild(div);
-            updateBannerVisibility();
-          }, 5000);
-        }
-        updateBannerVisibility();
-      }
+<script src="Build/WebBuild.loader.js?v=b7abca4c11"></script>
+<script>
+  (function () {
+    var canvas = document.getElementById("unity-canvas");
+    var fill = document.getElementById("fill");
+    var status = document.getElementById("status");
+    var errorBox = document.getElementById("error");
+    var loading = document.getElementById("loading");
+    // stop the page from scrolling or zooming while the thumbs mash
+    document.addEventListener("touchmove", function (e) { e.preventDefault(); }, { passive: false });
+    document.addEventListener("gesturestart", function (e) { e.preventDefault(); });
+    // holding a character opens its detail: the browser's own long-press menu and selection must not cut the touch
+    document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+    document.addEventListener("selectstart", function (e) { e.preventDefault(); });
+    var config = {
+      dataUrl: "Build/WebBuild.data.unityweb?v=b7abca4c11",
+      frameworkUrl: "Build/WebBuild.framework.js.unityweb?v=b7abca4c11",
+      codeUrl: "Build/WebBuild.wasm.unityweb?v=b7abca4c11",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "Ringside",
+      productName: "RingsideHearts",
+      productVersion: "0.6",
+      devicePixelRatio: Math.min(window.devicePixelRatio || 1, 2),
+      matchWebGLToCanvasSize: true,
+      autoSyncPersistentDataPath: true,
+    };
+    createUnityInstance(canvas, config, function (p) {
+      var pct = Math.round(p * 100);
+      fill.style.width = pct + "%";
+      status.textContent = "경기장 준비 중… " + pct + "%";
+    }).then(function () {
+      loading.hidden = true;
+    }).catch(function (message) {
+      errorBox.hidden = false;
+      errorBox.textContent = "불러오지 못했어요: " + message;
+    });
+  })();
+</script>
 
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebBuild.loader.js";
-      var config = {
-        arguments: [],
-        dataUrl: buildUrl + "/WebBuild.data.unityweb",
-        frameworkUrl: buildUrl + "/WebBuild.framework.js.unityweb",
-        codeUrl: buildUrl + "/WebBuild.wasm.unityweb",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "RingsideHearts",
-        productVersion: "0.1.0",
-        showBanner: unityShowBanner,
-        // errorHandler: function(err, url, line) {
-        //    alert("error " + err + " occurred at line " + line);
-        //    // Return 'true' if you handled this error and don't want Unity
-        //    // to process it further, 'false' otherwise.
-        //    return true;
-        // },
-      };
-
-      // By default, Unity keeps WebGL canvas render target size matched with
-      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
-      // Set this to false if you want to decouple this synchronization from
-      // happening inside the engine, and you would instead like to size up
-      // the canvas DOM size and WebGL render target sizes yourself.
-      // config.matchWebGLToCanvasSize = false;
-
-      // If you would like all file writes inside Unity Application.persistentDataPath
-      // directory to automatically persist so that the contents are remembered when
-      // the user revisits the site the next time, uncomment the following line:
-      // config.autoSyncPersistentDataPath = true;
-      // This autosyncing is currently not the default behavior to avoid regressing
-      // existing user projects that might rely on the earlier manual
-      // JS_FileSystem_Sync() behavior, but in future Unity version, this will be
-      // expected to change.
-
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        // Mobile device style: fill the whole browser client area with the game canvas:
-
-        var meta = document.createElement('meta');
-        meta.name = 'viewport';
-        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
-        document.getElementsByTagName('head')[0].appendChild(meta);
-        document.querySelector("#unity-container").className = "unity-mobile";
-        canvas.className = "unity-mobile";
-
-        // To lower canvas resolution on mobile devices to gain some
-        // performance, uncomment the following line:
-        // config.devicePixelRatio = 1;
-
-
-      } else {
-        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
-        canvas.style.width = "450px";
-        canvas.style.height = "800px";
-      }
-
-      document.querySelector("#unity-loading-bar").style.display = "block";
-
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          document.querySelector("#unity-progress-bar-full").style.width = 100 * progress + "%";
-              }).then((unityInstance) => {
-                document.querySelector("#unity-loading-bar").style.display = "none";
-                document.querySelector("#unity-fullscreen-button").onclick = () => {
-                  unityInstance.SetFullscreen(1);
-                };
-
-              }).catch((message) => {
-                alert(message);
-              });
-            };
-
-      document.body.appendChild(script);
-
-    </script>
-  </body>
-</html>
+</body></html>
